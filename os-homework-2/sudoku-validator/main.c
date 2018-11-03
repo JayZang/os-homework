@@ -6,7 +6,6 @@
 #define ROWS  9
 #define COLS  9
 
-pthread_mutex_t mutex;
 bool result = true;
 
 void *process(void *point);
@@ -24,7 +23,6 @@ int main(int argc, char const *argv[])
     {3, 7, 1, 9, 5, 6, 8, 4, 2},
     {4, 9, 6, 1, 8, 2, 1, 7, 3},
     {2, 8, 5, 4, 7, 3, 9, 1, 0}};
-  pthread_mutex_init(&mutex, NULL);
 
   for (int i = 0; i < ROWS; i++) {
     for (int j = 0; j < COLS; j++) {
@@ -44,15 +42,12 @@ int main(int argc, char const *argv[])
     printf("Result: false\r\n");
   }
 
-  pthread_mutex_destroy(&mutex);
   return 0;
 }
 
 void *process(void *val) {
   if (*((int *)val) == 0) {
-    pthread_mutex_lock(&mutex);
     result = false;
-    pthread_mutex_unlock(&mutex);
   }
 
   return NULL;
